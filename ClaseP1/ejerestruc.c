@@ -67,7 +67,7 @@ int main(int argc, char *argv[])
 
      printpersona(&p1);                             // Imprime los datos de Juan Lopez
      printpersona(pp1);                             // Imprime los datos de Luisa Castro
-     free(pp1);
+     free(pp1);                                     // Libera espacio en la memoria heap
 //   system("PAUSE");
 
      persona *ps;
