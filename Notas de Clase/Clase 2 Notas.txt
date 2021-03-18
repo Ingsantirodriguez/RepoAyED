@@ -32,7 +32,8 @@ Declaracion de una funcion o metodo:
 Para utilizar un metodo con un objeto de la clase en main:
 Ej: cout << <nombreObj>.<NombreMetodo>(<parametros>);
 
-El puntero "this" que esta dentro de los metodos apunta a la direccion del objeto
+El puntero "this" que esta dentro de los metodos y el constructor apunta a la direccion del objeto
+Cada objeto creado tiene un puntero this que apunta a si mismo
 
 Declaracion de un puntero a una clase:
 
