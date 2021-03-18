@@ -1,0 +1,47 @@
+Clase Teorica 2
+Clases en C++
+
+Declaracion de una clase:
+
+class <nombre>{
+    private:                            // private quiere decir que solo los metodos de esta clase pueden acceder
+            <variables protegidas>; 
+    public:
+            <Constructor>               // Se pueden crear varios y se diferencian en los atributos que se les pasan
+            ~<Destructor>                
+            <Metodos o funciones>
+};
+
+Inicializar un objeto:
+
+<nombre de la clase> <nombre del obj>(<parametros>)    // Pueden no pasarse parametros
+
+
+Declaracion de un Constructor:
+
+<NombreClase>::<NombreClase>(<parametros>) {
+
+}
+
+Declaracion de una funcion o metodo:
+
+<tipoQueRetorna> <NombreClase>::<NombreMetodo> (<parametros>){
+
+}
+
+Para utilizar un metodo con un objeto de la clase en main:
+Ej: cout << <nombreObj>.<NombreMetodo>(<parametros>);
+
+El puntero "this" que esta dentro de los metodos apunta a la direccion del objeto
+
+Declaracion de un puntero a una clase:
+
+<NombreClase> *<nombreObj> = new <Constructor>();
+
+Para liberar el espacio de memoria:
+
+delete(<nombreObj>);
+
+
+
+// Testear lo ultimo visto en la clase
