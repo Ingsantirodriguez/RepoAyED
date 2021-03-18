@@ -176,6 +176,52 @@ void Tiempo::incrementaHoras(const int cuenta )
 
 } // fin de la funci�n incrementaHoras
 
+
+class Semana_Laboral {
+
+   private:
+      string nombre;
+      long int dni;
+      Tiempo horarios[5][2];
+      
+   public:
+      Semana_Laboral(string name, long int doc);
+      ~Semana_Laboral();
+      void editarHorario(int dia, Tiempo tEntrada, Tiempo tSalida);
+      Tiempo horasSemanales();
+      Tiempo getArray(Tiempo h[5][2]);
+
+}
+
+Semana_Laboral::Semana_Laboral(string name, long int doc)
+{
+   cout << "\nConstructor de semana laboral ";
+   nombre = name;
+   dni = doc;
+}
+
+Semana_Laboral::~Semana_Laboral()
+{
+   cout << "\nDestructor de semana laboral";
+}
+
+void Semana_Laboral::editarHorario(int dia, Tiempo tEntrada, Tiempo tSalida)
+{
+   int day = dia-1;
+   horarios [day][0] = tEntrada; 
+   horarios [day][1] = tSalida;
+}
+
+Tiempo Semana_Laboral::horasSemanales()
+{
+   cout << "hola";
+}
+
+Tiempo Semana_Laboral::getArray(Tiempo h[5][2])
+{
+   return h;
+}
+
 int main(int argc, char *argv[])
 {  
     {Tiempo t(14,40,0),x,y(10);              // crea el objeto de Tiempo
@@ -209,15 +255,24 @@ int main(int argc, char *argv[])
         << "  Minuto: " << t.obtieneMinuto()
         << "  Segundo: " << t.obtieneSegundo() << "\n\n";
 
-   t.estableceHora( 11, 58, 0 );    // establece hora
-   t.incrementaSegundos( 150 );  // incrementa los minutos de t en 3
-   t.imprimeEstandar(); cout<<endl;
+//   t.estableceHora( 11, 58, 0 );    // establece hora
+//   t.incrementaSegundos( 150 );  // incrementa los minutos de t en 3
+//   t.imprimeEstandar(); cout<<endl;
 
 
 
     cout<<endl<<endl;
 
   }
+  Tiempo te, ts;
+  te.estableceHora(8, 0, 0);
+  ts.estableceHora(17, 0, 0);
+  Semana_Laboral sl("Santiago", 41080072);
+  for (int i = 0; i=5; i++){
+     sl.editarHorario(i+1, te, ts);
+  }
+
+
     cout<<endl<<endl;
     system("PAUSE");
     return EXIT_SUCCESS;
