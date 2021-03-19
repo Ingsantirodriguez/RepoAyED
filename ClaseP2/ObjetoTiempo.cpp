@@ -176,16 +176,16 @@ void Tiempo::incrementaHoras(const int cuenta )
 class Semana_Laboral {
 
    private:
-      string nombre;
-      long int dni;
-      Tiempo horarios[5][2];
+      string nombre;             // nombre del empleado como string
+      long int dni;              // dni del empleado como long int (por las dudas)
+      Tiempo horarios[5][2];     // array de 5x2 que almacena datos de tipo tiempo
       
    public:
-      Semana_Laboral(string name, long int doc);
-      ~Semana_Laboral();
-      void editarHorario(int dia, Tiempo tEntrada, Tiempo tSalida);
-      void printHorasSemanales();
-      void printHorario();
+      Semana_Laboral(string name, long int doc);   // constructor que establece dni y nombre
+      ~Semana_Laboral();                           // destructor
+      void editarHorario(int dia, Tiempo tEntrada, Tiempo tSalida);  // cambia el horario de salida y entrada de un dia laboral, 1=lunes, 2=martes, etc
+      void printHorasSemanales();      // imprime la cantidad de hs, min y seg semanales trabajadas en una semana
+      void printHorario();             // imprime el array de horarios
 
 };
 
@@ -203,24 +203,30 @@ Semana_Laboral::~Semana_Laboral()
 
 void Semana_Laboral::editarHorario(int dia, Tiempo tEntrada, Tiempo tSalida)
 {
-   int day = dia-1;
+   int day = dia-1;                 // para que 1 modifique el primer elemento del arreglo debo restarle 1
    horarios [day][0] = tEntrada; 
    horarios [day][1] = tSalida;
 }
 
 void Semana_Laboral::printHorasSemanales()
 {
-   int segundosEnt = 0;
+   int segundosEnt = 0;          // inicializo las variables que voy a utilizar
    int segundosSal = 0;
    int segundosTrabajados = 0;
    int h, m, s;
-   for (int i=0; i<5; i++){
+
+   // resto la hora de salida en segundos con la hora de entrada en segundos para cada dia 
+   // sumando todos los dias para obtener la cantidad de segundos trabajados esa semana
+
+   for (int i=0; i<5; i++){ 
       segundosEnt = horarios[i][0].obtieneSegundo() + horarios[i][0].obtieneMinuto()*60 + horarios[i][0].obtieneHora1()*60*60;
       segundosSal = horarios[i][1].obtieneSegundo() + horarios[i][1].obtieneMinuto()*60 + horarios[i][1].obtieneHora1()*60*60;
       segundosTrabajados += segundosSal - segundosEnt;
    }
 
-   cout << "\n" << segundosTrabajados;
+   // paso los segundos a horas, minutos y segundos y los imprimo
+   // no creo un objeto de tipo tiempo porque este no permite un valor de hora
+   // mayor a 24, lo que limita la cantidad de horas semanales posibles de trabajar
 
    h = (segundosTrabajados/60)/60;
    m = (segundosTrabajados - h*60*60)/60;
@@ -231,7 +237,7 @@ void Semana_Laboral::printHorasSemanales()
         << setw( 2 ) << s;
 }
 
-void Semana_Laboral::printHorario()
+void Semana_Laboral::printHorario()    // imprime el horario de entrada y de salida de todos los dias
 {
    for (int i=0; i<5; i++) {
       cout << "\n";
@@ -293,8 +299,8 @@ int main(int argc, char *argv[])
   for (int i = 0; i<5; i++){                 // Llena el array de los horarios
      sl.editarHorario(i+1, te, ts);
   }
-  sl.printHorario();
-  sl.printHorasSemanales();
+  sl.printHorario();                         // Imprime los horarios semanales
+  sl.printHorasSemanales();                  // Imprime la cant. de horas semanales trabajadas
 
 
     cout<<endl<<endl;

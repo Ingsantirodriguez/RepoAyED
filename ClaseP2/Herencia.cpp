@@ -15,6 +15,8 @@ public:
    
    void estableceY( int );    // establece y en el par de coordenadas
    int obtieneY() const;      // devuelve y desde el par de coordenadas
+
+   void setXY(int , int);     // desplaza el punto un dx y dy
    
    void imprime() const;  // muestra el objeto Punto3
 
@@ -59,7 +61,13 @@ int Punto3::obtieneY() const
    return y;
 
 } // fin de la funci�n obtieneY
-   
+
+void Punto3::setXY(int dx, int dy)
+{
+   this->estableceX(this->obtieneX()+dx);    // utiliza metodos ya escritos
+   this->estableceY(this->obtieneY()+dy);
+}
+
 // muestra el objeto Punto3
 void Punto3::imprime() const
 {
@@ -185,11 +193,15 @@ int main(int argc, char *argv[])
    // despliega el perimetro del semicirculo
    cout << "\nEl perimetro de la semicircunferencia es " << circulo->getSemiCircPer();
 
+   cout << "\n\n";
+   circulo->setXY(7,7);    // desplazara el punto 7 hacia arriba y 7 hacia la derecha
+   circulo->imprime();
+
    cout << endl;
     system("PAUSE");
     return EXIT_SUCCESS;
 }
 // Agregar funciones miembro que:
-// desplacen el punto un dx y dy
+// desplacen el punto un dx y dy // HECHO
 // incremente el circulo un % // HECHO
 // Calcular el perimetro de la semi circunferencia // HECHO
