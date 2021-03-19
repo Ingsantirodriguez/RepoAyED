@@ -39,13 +39,9 @@ private:
 // los valores predeterminados son 0 (vea la definicon de la clase)
 Tiempo::Tiempo( int hr, int min, int seg ) 
 { 
-   cout<<"\n soy el constructor\n";
    estableceHora( hr, min, seg ); 
-
 } // fin del constructor Tiempo
-Tiempo::~Tiempo()
-{ cout<<"\n soy el destructor ------------";
-}
+Tiempo::~Tiempo(){}
 // establece los valores de hora, minuto y segundo
 void Tiempo::estableceHora( int h, int m, int s ) 
 { 
@@ -188,14 +184,14 @@ class Semana_Laboral {
       Semana_Laboral(string name, long int doc);
       ~Semana_Laboral();
       void editarHorario(int dia, Tiempo tEntrada, Tiempo tSalida);
-      Tiempo horasSemanales();
-      Tiempo getArray(Tiempo h[5][2]);
+      void printHorasSemanales();
+      void printHorario();
 
-}
+};
 
 Semana_Laboral::Semana_Laboral(string name, long int doc)
 {
-   cout << "\nConstructor de semana laboral ";
+   cout << "\nConstructor de semana laboral \n";
    nombre = name;
    dni = doc;
 }
@@ -212,19 +208,44 @@ void Semana_Laboral::editarHorario(int dia, Tiempo tEntrada, Tiempo tSalida)
    horarios [day][1] = tSalida;
 }
 
-Tiempo Semana_Laboral::horasSemanales()
+void Semana_Laboral::printHorasSemanales()
 {
-   cout << "hola";
+   int segundosEnt = 0;
+   int segundosSal = 0;
+   int segundosTrabajados = 0;
+   int h, m, s;
+   for (int i=0; i<5; i++){
+      segundosEnt = horarios[i][0].obtieneSegundo() + horarios[i][0].obtieneMinuto()*60 + horarios[i][0].obtieneHora1()*60*60;
+      segundosSal = horarios[i][1].obtieneSegundo() + horarios[i][1].obtieneMinuto()*60 + horarios[i][1].obtieneHora1()*60*60;
+      segundosTrabajados += segundosSal - segundosEnt;
+   }
+
+   cout << "\n" << segundosTrabajados;
+
+   h = (segundosTrabajados/60)/60;
+   m = (segundosTrabajados - h*60*60)/60;
+   s = segundosTrabajados - h*60*60 - m*60;
+   cout << "\nEl tiempo total trabajado por semana es: " 
+        << setfill( '0' ) << setw( 2 ) << h << ":"    
+        << setw( 2 ) << m << ":"
+        << setw( 2 ) << s;
 }
 
-Tiempo Semana_Laboral::getArray(Tiempo h[5][2])
+void Semana_Laboral::printHorario()
 {
-   return h;
+   for (int i=0; i<5; i++) {
+      cout << "\n";
+      horarios[i][0].imprimeUniversal();
+      cout << " ";
+      horarios[i][1].imprimeUniversal();
+   }
 }
 
 int main(int argc, char *argv[])
-{  
-    {Tiempo t(14,40,0),x,y(10);              // crea el objeto de Tiempo
+{ 
+   /*
+
+     Tiempo t(14,40,0),x,y(10);              // crea el objeto de Tiempo
       t.imprimeEstandar(); cout<<endl;
       x.imprimeEstandar(); cout<<endl;
       y.imprimeEstandar(); cout<<endl;
@@ -255,22 +276,25 @@ int main(int argc, char *argv[])
         << "  Minuto: " << t.obtieneMinuto()
         << "  Segundo: " << t.obtieneSegundo() << "\n\n";
 
-//   t.estableceHora( 11, 58, 0 );    // establece hora
-//   t.incrementaSegundos( 150 );  // incrementa los minutos de t en 3
-//   t.imprimeEstandar(); cout<<endl;
+   t.estableceHora( 11, 58, 0 );    // establece hora
+   t.incrementaSegundos( 150 );  // incrementa los minutos de t en 3
+   t.imprimeEstandar(); cout<<endl;
 
 
 
     cout<<endl<<endl;
+*/
+     
 
-  }
   Tiempo te, ts;
-  te.estableceHora(8, 0, 0);
-  ts.estableceHora(17, 0, 0);
-  Semana_Laboral sl("Santiago", 41080072);
-  for (int i = 0; i=5; i++){
+  te.estableceHora(8, 15, 30);               // Setea el horario de entrada de todos los dias
+  ts.estableceHora(17, 5, 1);                // Setea el horario de salida de todos los dias
+  Semana_Laboral sl("Santiago", 41080072);   // Crea la semana laboral dando un nombre y DNI
+  for (int i = 0; i<5; i++){                 // Llena el array de los horarios
      sl.editarHorario(i+1, te, ts);
   }
+  sl.printHorario();
+  sl.printHorasSemanales();
 
 
     cout<<endl<<endl;
