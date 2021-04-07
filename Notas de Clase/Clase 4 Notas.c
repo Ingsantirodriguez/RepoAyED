@@ -95,20 +95,20 @@ int fib(x)
 Alternativa con recursividad simple:
 
 int fib2(int y, int a1, int a2, int x){
-		if (y==x){
-			return a1+a2;
-		}
-		else {
-			return fib2(y+1,a1+a2,a1,x);
-		}
+	if (y==x){
+		return a1+a2;
+	}
+	else {
+		return fib2(y+1,a1+a2,a1,x);
+	}
 
 int fib(int x){
-		if (x<=2){
-			return 1;
-		}
-		else {
-			return fib2(3,1,1,x);
-		}
+	if (x<=2){
+		return 1;
+	}
+	else {
+		return fib2(3,1,1,x);
+	}
 }
 
 // TAREA: FIBONACCI ITERATIVO
