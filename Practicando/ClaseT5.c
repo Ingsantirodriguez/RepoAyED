@@ -30,9 +30,16 @@ int F1Iter(int n)
 		return aux;							// Funcion h()?????
 }
 
+int NumMayRec(int a[])
+{
+
+
 void main()
 {
+		/*
 		int n=10;
 		F1Recu(n);
 		F1Iter(n);
+		*/
+
 }
