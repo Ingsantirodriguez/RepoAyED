@@ -1,0 +1,137 @@
+Clase Teorica 6
+
+Listas:
+	   Estructura de satos lineal, de acceso secuencial,
+que es un contenedor de datos que no tiene un tamano 
+predeterminado, sino que es dinamico a medida que crece
+de datos almacenados.
+
+Ventaja: No necesitamos tener determinado el tamanio o
+la cantidad de datos a almacenar como en un arreglo. El
+arreglo es un tamanio fijo, es una estructura estatica. La
+memoria ocupada sea la necesaria realmente, y evita alo-
+car la memoria al comienzo del programa.
+
+Desventaja: No tiene acceso directo o indexado como en 
+el arreglo. En un arreglo puedo acceder al elemento n-avo
+por medio del operador [] a[n-1].
+En una lista el acceso es secuencial: tengo un apuntador
+al comienzo de la lista y debo ir accediendo uno a uno los 
+elementos de la lista hasta llegar al k-elemento.
+
+Se debe a la estructura en si misma: porque cada elemen-
+to o dato incorporado se reserva memoria para contener 
+el nuevo dato y agregarlo a la lista.
+
+La estructura lista tiene un puntero a un nodo: es el co-
+mienzo de la lista.
+
+Agregar un dato: alocar la memoria para un nodo, copiar 
+el valor en esa posicion de memoria, y enlazar el nodo.
+Apuntar el puntero next del nodo.
+
+La consecuencia es que al agregar un dato, lo antepone 
+en la lista: es el dato que va a estar apuntado por el czo 
+de la lista.
+
+Para armar una lista debo:
+1) Generar una lista vacia.
+2) Para agregar un dato:
+2.1) Alocar la memoria para un nuevo nodo.
+2.2) Copiar el dato al nodo.
+2.3) Asignar el next del nodo al comienzo.
+2.4) Cambiar el comienzo por la direccion del nuevo nodo.
+
+Representar una lista con [3,4,5,63]
+Una lista nueva: []
+Agregar un dato en la lista (8) => [8]
+Le agregamos un nuevo valor 3 => [3,8]
+Agregamos un 10 => [10,3,8]
+
+Especificaciones Algebraicas:
+
+Nos permite tener una definicion precisa del comporta-
+miento, que hace cada estructura y que funciones tiene
+disponibles y como se definen y operan.
+
+Tipo: Lista Accesorio un tipo de datos, que es el tipo de 
+datos contenido Tipo Parametrico.
+
+Lista de enteros, Lista de String (entero, o el string es el 
+tipo parametrico del tipo de lista)
+
+Operaciones: 	A es tipo parametrico
+		
+newList: -> Lista             operaciones constructoras 
+add: Lista x A -> Lista	del tipo: newList, add 
+head: Lista -> A
+tail: Lista -> Lista
+empty: Lista -> bool
+
+Comportamiento:
+
+empty(newList()) -> true
+empty(add(l,a)) -> false
+
+head(newList()) -> error
+head(add(l,a)) -> a
+
+tail(newList()) -> error
+tail(add(l,a)) -> l
+
+Definicion de [10,3,8] = add(add(add(newList(),8),3),10)
+
+Nueva funcion:
+Concat: Lista->Lista->Lista
+
+Ejemplo: [2,5] concat [8,3] -> [2,5,8,3]
+
+Comportamiento de concat: l,m
+
+concat(newList(),m)=m
+concat(add(l,a),m)=add(concat(l,m),a)
+concat(add(add(newList,5),2),add(add(newList(),3),8)) = 
+add(concat(add(newList(),5),add(add(newList(),3),8)),2) =
+add(add(concat{newList(),add(add(newList(),3),8)},5),2) = 
+add(add(add(add(newList(),3),8),5),2)
+
+sumaLista:Lista(Entero)->Entero A:Entero
+sumaLista:newLista()->0
+sumaLista:add(l,a)->a+sumaLista(l)
+
+sumaLista() = { 0					l = newList()
+			    a + sumaLista(ll)	l = add(ll,a)	ll:Lista ll == tail(l)
+
+size(l) = { 0				l=newList()
+			1+size(ll)		l=add(ll,a)	ll:Lista	ll == tail(l)
+
+
+funciones nuevas:
+
+inicio : Lista x Nat -> Lista (tomar los primeros n elementos)
+
+final : Lista x Nat -> Lista (eliminar los primeros n elementos)
+
+insertar : Lista x Nat x A -> Lista (poner en la posicion el valor a)
+
+----------------------------------------------------------------------
+
+inicio (l,n) = {newList()					l=newList()
+				l							n=0
+				add(inicio(ll,n-1),a)		l=add(ll,a) y n>0
+
+inicio([4,7,1],2) = add(inicio([7,1],1),4)
+				  = add(add(inicio([1],0),7),4)
+				  = add(add(newList(),7),4) = [4,7]
+
+final (l,n) = {l				n=0
+			   newList()		l=newList()
+			   final(ll,n-1)	l=add(ll,a) y n>0
+
+final([4,7,1],2) = final([7,1],1)
+				 = final([1],0)
+				 = [1]
+
+l = concat(inicio(l,n),final(l,n))
+
+insertar(l,n,a) = concat(inicio(l,n-1),add(final(l,n-1),a))
