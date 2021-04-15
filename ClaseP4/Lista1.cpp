@@ -139,15 +139,10 @@ void Lista<T>::borrar_last()
 		Nodo<T>* aux = czo;
 		while (size>1){				// Mientras el tamano de size sea mayor a 1, aux apunta al siguiente nodo
 			aux=aux->get_next();	// de esta manera al llegar al ultimo elemento (size==1) lo borra.
+			cout << aux->get_dato()<< endl;
 			size--;
 		}
-		delete aux;
-		aux=czo;					// Se vuelve a hacer lo mismo que antes pero al finalizar el while() se setea el
-		size=this->size();			// puntero next del ultimo nodo a NULL.
-		while (size>1){
-			aux=aux->get_next();
-			size--;
-		}
+		delete aux->get_next();
 		aux->set_next(NULL);
 	}
 }
