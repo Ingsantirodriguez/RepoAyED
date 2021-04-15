@@ -41,6 +41,7 @@ public:
     void concat(Lista<T>* l1);// le transfiere los datos de l1 a this
     Lista<T>* copy(void);// hace una copia de la lista
     void tomar(int n);//deja "vivos" los n primeros nodos y borra el resto
+	void addOrdenado(T d);
    
 };
 template <class T>
@@ -106,7 +107,7 @@ int main()
     Lista<int>* r = new Lista<int>();
     Lista<string>* l2 = new Lista<string>();
     
-    
+   /* 
     l->add(" 11x");
     l->add(" 22y");
     l->add(" 33z");
@@ -139,7 +140,14 @@ int main()
     cout << l2->toPrint(" soy l2");
     l2->tomar(4);
     cout << l2->toPrint(" soy l2");
-    
+    */
+
+	l->addOrdenado("Maria");
+	l->addOrdenado("Abril");
+	l->addOrdenado("Jose");
+	l->addOrdenado("Esteban");
+	l->addOrdenado("Roberto");
+    cout << "l= "<<l->toPrint("fin") << endl;
 
     cout << endl << endl;
     system("PAUSE");
@@ -204,4 +212,24 @@ template <class T> void Lista<T>::tomar(int n)
     }
 }
 
-
+template <class T>
+void Lista<T>::addOrdenado(T d)
+{
+		Nodo<T>* tmp = this->czo;
+		bool aux = true;
+		if (this->esvacia()){
+				this->add(d);
+				aux = false;
+		}
+		while (aux){
+				if (d>tmp->get_dato()){
+						tmp=tmp->get_next();
+				}
+				else {
+						Nodo<T>* tmp2= new Nodo<T>(d);
+						tmp2->set_next(tmp->get_next());
+						tmp->set_next(tmp2);
+						aux = false;
+				}
+		}
+}
