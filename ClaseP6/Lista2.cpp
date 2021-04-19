@@ -42,6 +42,8 @@ public:
     Lista<T>* copy(void);// hace una copia de la lista
     void tomar(int n);//deja "vivos" los n primeros nodos y borra el resto
 	void addOrdenado(T d);
+	bool esta(T d);
+	void borrarDato(T d);
    
 };
 template <class T>
@@ -152,18 +154,21 @@ int main()
 	l->addOrdenado("Tomas");
 
 	cout << "l= "<<l->toPrint("fin") << endl;
+	
+//	l->esta("Manuel");
 
-    cout << endl << endl;
+	l->borrarDato("Abril");
+	l->borrarDato("Zulma");
+	l->borrarDato("Santi");
+	l->esta("Yanina");	
+	cout << "l= "<<l->toPrint("fin") << endl;
+
     system("PAUSE");
     return EXIT_SUCCESS;
 
 }
 
-/*
-void addOrdenado(T d)// suma nodos ordenados de menor a mayor
-bool esta(T d); //retorna true cuando d est� en la lista
-void borrarDato(T d)// borra el nodo que contiene a d
-*/
+
 
 template <class T> int Lista<T>::size()
 {
@@ -219,32 +224,86 @@ template <class T> void Lista<T>::tomar(int n)
 template <class T>
 void Lista<T>::addOrdenado(T d)
 {
-		Nodo<T>* tmp = this->czo;
+		Nodo<T>* tmp = this->czo;		// Variables temporales necesarias
 		bool aux = true;
-		if (this->esvacia()){
+		if (this->esvacia()){			// Caso si la lista es vacia, lo agrega al principio.
 				this->add(d);
 				aux = false;
 		}
-		if (d<tmp->get_dato()) {
+		if (d<tmp->get_dato()) {		// Caso si d es menor al primer elemento de la lista, lo agrega al principio.
 					this->add(d);
 					aux = false;	
 				}
 
 		while (aux){
-				if (d>tmp->get_dato() && tmp->get_next()==NULL){ 
+				if (d>tmp->get_dato() && tmp->get_next()==NULL){ 		// Caso si d es mayor al ultimo nodo, se agrega al final de la lista.
 						Nodo<T>* tmp2= new Nodo<T>(d);
 						tmp->set_next(tmp2);
 						tmp2->set_next(NULL);
 						aux = false;
 				}
-				else if (d>tmp->get_dato() && d<tmp->get_next()->get_dato()){
-						Nodo<T>* tmp2= new Nodo<T>(d);
+				else if (d>tmp->get_dato() && d<tmp->get_next()->get_dato()){	// Caso si d esta en un punto intermedio de la lista.
+						Nodo<T>* tmp2= new Nodo<T>(d);							// Se agrega entre 2 nodos, despues del menor y antes del mayor.
 						tmp2->set_next(tmp->get_next());
 						tmp->set_next(tmp2);
 						aux = false;
 				}
-				else {
+				else {								// Caso si d es menor al nodo actual.
 						tmp=tmp->get_next();
+				}
+		}
+}
+/*
+void addOrdenado(T d)// suma nodos ordenados de menor a mayor // No anda del todo, preguntar en clase de consulta.
+bool esta(T d); //retorna true cuando d est� en la lista // Hecho
+void borrarDato(T d)// borra el nodo que contiene a d // No anda del todo, creo que el problema es con la funcion print que no imprime el ultimo elemento.
+*/
+template <class T>
+bool Lista<T>::esta(T d)
+{
+		Nodo<T>* tmp = this->czo;	// Variables temporales
+		while (true){
+				if (d==tmp->get_dato()){							// Caso si el dato d == actual
+						cout << d << " esta en la lista" << endl;
+						return true;
+				}
+				else if (tmp->get_next()==NULL){					// Caso si llegue al ultimo elemento y no coincide, entonces no esta en la lista.
+						cout << d << " no esta en la lista" << endl;
+						return false;
+				}
+				else {
+						tmp=tmp->get_next();						// Caso si d != actual y actual no es el ultimo.
+				}
+		}
+		return false;
+}
+template <class T>
+void Lista<T>::borrarDato(T d)
+{
+		Nodo<T>* tmp = this->czo;	// Variables temporales
+		Nodo<T>* tmp2 = this->czo;
+		bool aux = true;
+		if (this->esvacia()){
+				cout <<"Lista vacia, nada que borrar" << endl;
+				aux = false;
+		}
+		else if (d==tmp->get_dato()){	// Caso si el dato d == primer dato. Borra el primer elemento.
+				this->borrar();
+				aux = false;
+		}
+		while (aux){
+				if (tmp->get_next()==NULL){								// Caso si llegue al ultimo elemento y no coincide, no borra nada.
+						cout << d << " no esta en la lista" << endl;
+						aux = false;
+				}
+				else if (d==tmp->get_next()->get_dato()){				// Si d == al dato que le sigue al actual, borra al dato y repara la lista.
+						tmp2 = tmp->get_next();
+						tmp->set_next(tmp->get_next()->get_next());
+						delete tmp2;	
+						aux = false;
+				}
+				else {
+						tmp=tmp->get_next();							// Caso si d != actual y actual no es el ultimo.
 				}
 		}
 }
