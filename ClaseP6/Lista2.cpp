@@ -142,12 +142,16 @@ int main()
     cout << l2->toPrint(" soy l2");
     */
 
-	l->addOrdenado("Maria");
 	l->addOrdenado("Abril");
-	l->addOrdenado("Jose");
-	l->addOrdenado("Esteban");
-	l->addOrdenado("Roberto");
-    cout << "l= "<<l->toPrint("fin") << endl;
+	l->addOrdenado("Eze");
+	l->addOrdenado("Agus");
+	l->addOrdenado("Santi");
+	l->addOrdenado("Manuel");
+	l->addOrdenado("Yanina");
+	l->addOrdenado("Zulma");
+	l->addOrdenado("Tomas");
+
+	cout << "l= "<<l->toPrint("fin") << endl;
 
     cout << endl << endl;
     system("PAUSE");
@@ -221,15 +225,26 @@ void Lista<T>::addOrdenado(T d)
 				this->add(d);
 				aux = false;
 		}
-		while (aux){
-				if (d>tmp->get_dato()){
-						tmp=tmp->get_next();
+		if (d<tmp->get_dato()) {
+					this->add(d);
+					aux = false;	
 				}
-				else {
+
+		while (aux){
+				if (d>tmp->get_dato() && tmp->get_next()==NULL){ 
+						Nodo<T>* tmp2= new Nodo<T>(d);
+						tmp->set_next(tmp2);
+						tmp2->set_next(NULL);
+						aux = false;
+				}
+				else if (d>tmp->get_dato() && d<tmp->get_next()->get_dato()){
 						Nodo<T>* tmp2= new Nodo<T>(d);
 						tmp2->set_next(tmp->get_next());
 						tmp->set_next(tmp2);
 						aux = false;
+				}
+				else {
+						tmp=tmp->get_next();
 				}
 		}
 }
